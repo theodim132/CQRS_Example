@@ -1,4 +1,4 @@
-﻿using CQRS_Example.Domain.Entities;
+﻿using CQRS_Example.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;

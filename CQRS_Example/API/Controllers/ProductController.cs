@@ -1,6 +1,6 @@
 ﻿using CQRS_Example.Application.Commands.ProductCommands;
 using CQRS_Example.Application.Queries;
-using CQRS_Example.Domain.Entities;
+using CQRS_Example.Domain.Entities.Products;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,6 +54,13 @@ namespace CQRS_Example.API.Controllers
             var updated = await _mediator.Send(new UpdateProductCommand(updatedProduct));
 
             return Ok(updated);
+        }
+
+        [HttpDelete("{id:int}", Name = "DeleteProductById")]
+        public async Task<IActionResult> DeleteProductById(int Id)
+        {
+            var isSuccess = await _mediator.Send(new DeleteProductCommand(Id));
+            return CreatedAtRoute("DeleteProductById", new { success= isSuccess });
         }
     }
 }

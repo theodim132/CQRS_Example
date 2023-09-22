@@ -1,5 +1,5 @@
 ﻿using CQRS_Example.Application.Commands.ProductCommands;
-using CQRS_Example.Domain.Entities;
+using CQRS_Example.Domain.Entities.Products;
 using CQRS_Example.Domain.Interfaces;
 using CQRS_Example.Infrastructure.Repositories;
 using MediatR;

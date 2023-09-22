@@ -1,4 +1,4 @@
-﻿using CQRS_Example.Domain.Entities;
+﻿using CQRS_Example.Domain.Entities.Products;
 using CQRS_Example.Domain.Interfaces;
 using CQRS_Example.Infrastructure.DataContext;
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +18,13 @@ namespace CQRS_Example.Infrastructure.Repositories
             return product;
         }
 
-        public async Task<bool> DeleteProductAsync(int Id)
+        public async Task<bool> DeleteProductAsync(int Id, CancellationToken cancelationToken)
         {
-            var productFromDb = await _context.Products.FirstOrDefaultAsync(x => x.Id == Id);
+            var productFromDb = await _context.Products.FindAsync(Id, cancelationToken);
             if (productFromDb != null)
             {
                 _context.Products.Remove(productFromDb);
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;
@@ -31,7 +32,7 @@ namespace CQRS_Example.Infrastructure.Repositories
 
         public async Task<Product> GetProductByIdAsync(int Id)
         {
-            var productFromDb = await _context.Products.FirstOrDefaultAsync(x => x.Id == Id);
+            var productFromDb = await _context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
             if (productFromDb != null)
             {
                 return productFromDb;
@@ -41,7 +42,7 @@ namespace CQRS_Example.Infrastructure.Repositories
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            var productList = await _context.Products.ToListAsync();
+            var productList = await _context.Products.AsNoTracking().ToListAsync();
             return productList;
         }
 

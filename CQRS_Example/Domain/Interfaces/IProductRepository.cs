@@ -1,4 +1,4 @@
-﻿using CQRS_Example.Domain.Entities;
+﻿using CQRS_Example.Domain.Entities.Products;
 
 namespace CQRS_Example.Domain.Interfaces
 {
@@ -8,6 +8,6 @@ namespace CQRS_Example.Domain.Interfaces
         public Task<Product> GetProductByIdAsync(int Id);
         public Task<Product> AddProductAsync(Product product);
         public Task<bool> UpdateProductAsync(Product product);
-        public Task<bool> DeleteProductAsync(int Id);
+        public Task<bool> DeleteProductAsync(int Id, CancellationToken cancellationToken);
     }
 }
