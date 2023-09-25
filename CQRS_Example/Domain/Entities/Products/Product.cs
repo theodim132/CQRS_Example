@@ -5,8 +5,8 @@
         public int Id { get;  set; }
         public string Name { get;  set; } = string.Empty;
 
-        public Money Price { get;  set; }
+        //public Money Price { get;  set; }
 
-        public Sku Sku { get;  set; }
+        //public Sku Sku { get;  set; }
     }
 }

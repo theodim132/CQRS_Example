@@ -1,7 +1,9 @@
 using CQRS_Example;
+using CQRS_Example.Application.Behaviors;
 using CQRS_Example.Domain.Interfaces;
 using CQRS_Example.Infrastructure.DataContext;
 using CQRS_Example.Infrastructure.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 // Add services to the container.
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
 builder.Services.AddControllers();
 
 

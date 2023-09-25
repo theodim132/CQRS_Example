@@ -58,5 +58,14 @@ namespace CQRS_Example.Infrastructure.Repositories
             }
             return false;
         }
+
+        public async Task<bool> EventOccured(Product product, string evt)
+        {
+            var productFromDb = await _context.Products.SingleAsync(p => p.Id == product.Id);
+            productFromDb.Name = $"{product.Name} evt: {evt}";
+            _context.Update(productFromDb);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CQRS_Example.Application.Commands.ProductCommands;
+using CQRS_Example.Application.Notifications;
 using CQRS_Example.Application.Queries;
 using CQRS_Example.Domain.Entities.Products;
 using MediatR;
@@ -28,6 +29,7 @@ namespace CQRS_Example.API.Controllers
         public async Task<IActionResult> AddProduct([FromBody] Product product)
         {
             var productToReturn = await _mediator.Send(new AddProductCommand(product));
+            await _mediator.Publish(new ProductAddedNotification(productToReturn));
             return CreatedAtRoute("GetProductById", new { id = productToReturn.Id }, productToReturn);
         }
 
